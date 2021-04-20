@@ -8,15 +8,34 @@ import java.time.LocalDateTime
 
 class messageDao {
     val db = FirebaseFirestore.getInstance()
-    val msgCollection = db.collection("message")
+   // val msgCollection = db.collection("Chatroom")
 
+    var  messageModel :messageModel ?=null
    @RequiresApi(Build.VERSION_CODES.O)
    val currentDateTime = LocalDateTime.now()
     @RequiresApi(Build.VERSION_CODES.O)
+
+
+//         fun onetoone():String{
+//        if(messageModel?.senderUid.toString() < messageModel?.recUid.toString()){
+//            return messageModel?.senderUid+messageModel?.recUid;
+//        }
+//        else{
+//            return messageModel?.recUid + messageModel?.senderUid;
+//        }
+//         }
+
+
     fun chatStart(messageModel: messageModel){
 
-      val data =  msgCollection.document(messageModel.recUid+messageModel.senderUid).collection(currentDateTime.toString())
+        val firestore = FirebaseFirestore.getInstance()
+
+        val data =  firestore.collection("Chatroom").document(messageModel.senderUid+messageModel.recUid).collection("messages")
         data.document().set(messageModel)
 
     }
-}
+
+
+
+
+    }
